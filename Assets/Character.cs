@@ -15,6 +15,7 @@ public class Character : MonoBehaviour {
 	float jumpForce=350;
 	Vector2 jumpDirection;
 	Vector2 characterDirection;
+	//public Bullet bullet;
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		distToGround = gameObject.GetComponent<Collider2D> ().bounds.extents.y;
@@ -23,6 +24,7 @@ public class Character : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && landed) {
+	
 			rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
 			landed=false;
 		}	
@@ -33,20 +35,26 @@ public class Character : MonoBehaviour {
 				landed = false;
 			}
 		}
-		if(!(Input.GetKey(KeyCode.A) || Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && landed)
-		{
-			rb.velocity = new Vector2(0, rb.velocity.y);
-		}
-	}
 
-	void FixedUpdate () {
-		/*float move = Input.GetAxisRaw("Horizontal");
-		rb.velocity = new Vector2 (move * maxSpeed, rb.velocity.y);*/
 		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) {
 			rb.velocity = new Vector2 (-maxSpeed, rb.velocity.y);
 		} else if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) {
 			rb.velocity = new Vector2 (maxSpeed, rb.velocity.y);
 		}
+
+		if(rb.velocity.x != 0 && !(Input.GetKey(KeyCode.A) || Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && landed)
+		{
+			rb.velocity = new Vector2(0, rb.velocity.y);
+		}
+
+
+
+	}
+
+	void FixedUpdate () {
+		/*float move = Input.GetAxisRaw("Horizontal");
+		rb.velocity = new Vector2 (move * maxSpeed, rb.velocity.y);*/
+
 	}
 	void OnCollisionEnter2D(Collision2D coll)
 	{
@@ -54,6 +62,11 @@ public class Character : MonoBehaviour {
 		{
 			landed = true;
 			rb.velocity = new Vector2 (0, 0);
+		}
+		if (coll.gameObject.tag == "enemy") 
+		{
+			Debug.Log ("collision");
+			Application.LoadLevel ("GameOver");
 		}
 	}
 
