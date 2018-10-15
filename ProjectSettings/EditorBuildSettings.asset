@@ -8,6 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SceneDay3.unity
     guid: 9339bbdeaaf6449afaf7582bc9ca9bc5
-  - enabled: 1
-    path: Assets/GameOver.unity
-    guid: abafde48904c646a8ba47c7474241223
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000

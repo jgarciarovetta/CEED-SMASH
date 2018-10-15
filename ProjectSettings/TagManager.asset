@@ -6,6 +6,10 @@ TagManager:
   tags:
   - ground
   - enemy
+  - bullet
+  - enemybullet
+  - character
+  - sword
   layers:
   - Default
   - TransparentFX
@@ -15,10 +19,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - enemies
+  - character
+  - enemyBullet
+  - weapons
   - 
   - 
   - 

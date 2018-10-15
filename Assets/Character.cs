@@ -8,17 +8,14 @@ public class Character : MonoBehaviour {
 	Rigidbody2D rb;
 	float maxSpeed = 8f;
 	float jumpVelocity = 8f;
+	int health = 10;
 	bool landed = true;
-	float distToGround;
 	float jumpx;
 	float jumpy;
-	float jumpForce=350;
 	Vector2 jumpDirection;
 	Vector2 characterDirection;
-	//public Bullet bullet;
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
-		distToGround = gameObject.GetComponent<Collider2D> ().bounds.extents.y;
 	}
 	
 	// Update is called once per frame
@@ -47,15 +44,8 @@ public class Character : MonoBehaviour {
 			rb.velocity = new Vector2(0, rb.velocity.y);
 		}
 
-
-
 	}
 
-	void FixedUpdate () {
-		/*float move = Input.GetAxisRaw("Horizontal");
-		rb.velocity = new Vector2 (move * maxSpeed, rb.velocity.y);*/
-
-	}
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if(coll.gameObject.tag == "ground")
@@ -63,11 +53,19 @@ public class Character : MonoBehaviour {
 			landed = true;
 			rb.velocity = new Vector2 (0, 0);
 		}
-		if (coll.gameObject.tag == "enemy") 
-		{
-			Debug.Log ("collision");
-			Application.LoadLevel ("GameOver");
-		}
 	}
 
+	void OnTriggerEnter2D(Collider2D coll){
+		if (coll.gameObject.tag == "enemybullet")
+			health--;
+		if(health<1)
+			Application.LoadLevel ("GameOver");
+		
+	}
+		
+	void OnBecameInvisible()
+	{
+		Application.LoadLevel ("GameOver");
+	}
+		
 }
